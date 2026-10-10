@@ -7,13 +7,17 @@ at Hacettepe University.
 
 - index.html: About me
 - projects.html: Academic projects and tables with images
-- maps.html: Interactive maps (under development)
+- maps.html: Interactive Leaflet and OpenLayers maps of Ankara
 
 ## Technologies
 
 - HTML
 - CSS
 - Git
+- JavaScript
+- Leaflet 
+- OpenLayers 
+- OpenStreetMap
 
 ## Current Features
 
@@ -21,6 +25,11 @@ at Hacettepe University.
 - CSS heading animation
 - Responsive layout
 - Project descriptions and a table containing an image
+- Leaflet and OpenLayers maps with three Ankara landmarks
+- Markers visible only at zoom level 12 or higher
+- Clickable markers displaying location information
+- World repetition disabled
+- Independent reset buttons for both maps
 
 ## AI Assistance
 
@@ -47,3 +56,17 @@ coordinates to EPSG:3857, create vector markers, control their
 visibility by zoom level, and display information on marker clicks.
 
 World repetition is disabled using wrapX and view constraints.
+
+## Run Locally
+
+Open the project folder in VS Code and start Live Server.
+Navigate to index.html and use the menu to explore the pages.
+
+## Live Website
+
+https://nekrege.github.io/egemen-webgis/
+
+## Additional AI Learning
+
+I learned to handle button click events and reset each map
+to its initial centre and zoom level.
