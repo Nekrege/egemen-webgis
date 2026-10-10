@@ -210,3 +210,22 @@ table:has(.project-image) td:first-child {
     border-radius: 8px;
     background-color: #f1f5f9;
 }
+.map-button {
+    margin-bottom: 16px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    background-color: #0e7490;
+    color: white;
+    font: inherit;
+    cursor: pointer;
+}
+
+.map-button:hover {
+    background-color: #155e75;
+}
+
+.map-button:focus-visible {
+    outline: 3px solid #f59e0b;
+    outline-offset: 3px;
+}

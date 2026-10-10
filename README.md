@@ -39,3 +39,11 @@ repetition using noWrap.
 
 I resolved an OpenStreetMap tile access error by serving the
 page through VS Code Live Server instead of opening it as a file.
+
+## OpenLayers Development
+
+With AI assistance, I learned to convert longitude and latitude
+coordinates to EPSG:3857, create vector markers, control their
+visibility by zoom level, and display information on marker clicks.
+
+World repetition is disabled using wrapX and view constraints.

@@ -8,6 +8,7 @@
     <link
         rel="stylesheet"
         href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        
     >
     <link rel="stylesheet" href="style.css">
     <link
@@ -18,7 +19,7 @@
 </head>
 <body>
     <header>
-        <h1>Interactive Maps</h1>
+        <h1>Interactive Leaflet and OpenLayers maps of Ankara</h1>
         <p>Explore Ankara with Web GIS</p>
 
         <nav aria-label="Main navigation">
@@ -39,8 +40,13 @@
             </p>
 
             <p id="leaflet-status" aria-live="polite"></p>
-            <div id="leaflet-map" class="map-container"
-                 aria-label="Interactive map of Ankara"></div>
+
+    <button type="button" id="reset-leaflet" class="map-button">
+    Reset View
+</button>
+
+<div id="leaflet-map" class="map-container"
+     aria-label="Interactive map of Ankara"></div>
         </section>
         <section>
     <h2>OpenLayers Map — Ankara</h2>
@@ -51,6 +57,9 @@
     </p>
 
     <p id="ol-status" aria-live="polite"></p>
+    <button type="button" id="reset-ol" class="map-button">
+    Reset View
+</button>
 
     <div id="ol-map" class="map-container"
          aria-label="OpenLayers map of Ankara"></div>
@@ -132,6 +141,13 @@
 
         leafletMap.on("zoomend", updateMarkers);
         updateMarkers();
+        document.getElementById("reset-leaflet").addEventListener(
+    "click",
+    function () {
+        leafletMap.setView([39.92, 32.85], 11);
+    }
+);
+        
     </script>
 <script>
     // Reuse the locations defined in the Leaflet script.
@@ -230,6 +246,16 @@
                 feature.get("description");
         }
     });
+    document.getElementById("reset-ol").addEventListener(
+    "click",
+    function () {
+        olView.setCenter(ol.proj.fromLonLat([32.85, 39.92]));
+        olView.setZoom(11);
+
+        document.getElementById("ol-info").textContent =
+            "Zoom in to level 12 or higher to select a marker.";
+    }
+);
 </script>        
 </body>
 </html>
