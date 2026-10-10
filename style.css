@@ -229,3 +229,308 @@ table:has(.project-image) td:first-child {
     outline: 3px solid #f59e0b;
     outline-offset: 3px;
 }
+/* PORTFOLIO DESIGN UPDATE */
+
+:root {
+    --navy: #081526;
+    --teal: #087f8c;
+    --gold: #f5c76b;
+    --ink: #172b42;
+}
+
+/* Sayfa zemini */
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: var(--ink);
+    background:
+        radial-gradient(
+            circle at 5% 35%,
+            rgba(8, 127, 140, 0.10),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 95% 80%,
+            rgba(245, 199, 107, 0.14),
+            transparent 35%
+        ),
+        #eef3f8;
+}
+
+/* Büyük, dekoratif başlık alanı */
+header {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: 76px 24px 48px;
+    background:
+        radial-gradient(
+            ellipse at 80% 20%,
+            rgba(34, 211, 238, 0.20),
+            transparent 50%
+        ),
+        linear-gradient(120deg, #081526, #123349);
+    border-bottom: 4px solid var(--gold);
+}
+
+/* Harita ızgarasını çağrıştıran arka plan */
+header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image:
+        linear-gradient(
+            rgba(255, 255, 255, 0.05) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.05) 1px,
+            transparent 1px
+        );
+    background-size: 48px 48px;
+    pointer-events: none;
+}
+
+/* Dekoratif dairesel çizgiler */
+header::after {
+    content: "";
+    position: absolute;
+    width: 340px;
+    height: 340px;
+    right: -110px;
+    top: -100px;
+    z-index: -1;
+    border: 1px solid rgba(245, 199, 107, 0.35);
+    border-radius: 50%;
+    box-shadow:
+        0 0 0 45px rgba(245, 199, 107, 0.06),
+        0 0 0 90px rgba(245, 199, 107, 0.04);
+    pointer-events: none;
+}
+
+header h1 {
+    font-size: clamp(2.6rem, 7vw, 4.8rem);
+    line-height: 1.15;
+    letter-spacing: -2px;
+    text-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+header p {
+    margin: 18px 0 30px;
+    color: #b9dbe5;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+
+/* Menü */
+nav {
+    gap: 10px;
+}
+
+nav a {
+    padding: 10px 24px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    font-weight: 600;
+}
+
+nav a:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: var(--gold);
+}
+
+nav a[aria-current="page"] {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--navy);
+}
+
+/* İçerik kartları */
+main {
+    max-width: 1100px;
+    margin: 44px auto;
+}
+
+section {
+    position: relative;
+    padding: 34px;
+    margin-bottom: 28px;
+    border: 1px solid #dce6ef;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow:
+        0 12px 36px rgba(15, 39, 65, 0.06),
+        0 2px 6px rgba(15, 39, 65, 0.03);
+}
+
+h2 {
+    color: #123349;
+    font-size: 1.65rem;
+    line-height: 1.3;
+    letter-spacing: -0.5px;
+}
+
+h2::after {
+    content: "";
+    display: block;
+    width: 48px;
+    height: 4px;
+    margin-top: 12px;
+    border-radius: 4px;
+    background: linear-gradient(
+        90deg,
+        var(--teal),
+        var(--gold)
+    );
+}
+
+h3 {
+    color: var(--teal);
+}
+
+main p {
+    color: #475b70;
+}
+
+/* İlgi alanlarını etiketlere dönüştürür */
+main section > ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 0;
+    list-style: none;
+}
+
+main section > ul li {
+    margin: 0;
+    padding: 10px 16px;
+    border: 1px solid #cce7e8;
+    border-radius: 10px;
+    background: #edf8f8;
+    color: #12636d;
+    font-weight: 600;
+}
+
+/* Proje açıklamaları */
+article {
+    padding: 20px;
+    border-radius: 12px;
+    background: #f5f8fb;
+    border-left: 4px solid var(--teal);
+}
+
+article + article {
+    margin-top: 18px;
+    padding-top: 20px;
+    border-top: none;
+}
+
+article h3 {
+    margin-top: 0;
+}
+
+article p {
+    margin-bottom: 0;
+}
+
+/* Tablolar */
+.table-container {
+    border-radius: 12px;
+}
+
+thead {
+    background: #123349;
+}
+
+thead th {
+    padding: 16px;
+    border-color: #29475d;
+}
+
+tbody th,
+tbody td {
+    padding: 18px;
+    border-color: #dce6ef;
+}
+
+tbody tr:nth-child(even) {
+    background: #f1f7fa;
+}
+
+.project-image {
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(15, 39, 65, 0.12);
+}
+
+/* Haritalar ve düğmeler */
+.map-container {
+    border-radius: 14px;
+    border: 1px solid #cddce8;
+}
+
+.map-button {
+    padding: 11px 22px;
+    border-radius: 999px;
+    background: #087f8c;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(8, 127, 140, 0.18);
+}
+
+.map-button:hover {
+    background: #065e68;
+}
+
+#ol-info {
+    border-left: 3px solid var(--teal);
+    background: #edf8f8;
+}
+
+/* Alt bilgi */
+footer {
+    padding: 28px 20px;
+    background: var(--navy);
+    color: #bbcad9;
+    border-top: 2px solid #1d4055;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Mobil görünüm */
+@media (max-width: 600px) {
+    header {
+        padding: 48px 18px 32px;
+    }
+
+    header h1 {
+        letter-spacing: -1px;
+    }
+
+    header p {
+        font-size: 0.95rem;
+    }
+
+    nav a {
+        padding: 9px 16px;
+    }
+
+    main {
+        margin: 24px auto;
+    }
+
+    section {
+        padding: 22px;
+        border-radius: 16px;
+    }
+
+    h2 {
+        font-size: 1.35rem;
+    }
+
+    .map-container {
+        height: 360px;
+    }
+}
