@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maps | Egemen Erken</title>
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Interactive Maps</h1>
+        <p>Explore Ankara with Web GIS</p>
+
+        <nav aria-label="Main navigation">
+            <a href="index.html">About Me</a>
+            <a href="projects.html">Projects</a>
+            <a href="maps.html" aria-current="page">Maps</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Leaflet Map — Ankara</h2>
+            <p>
+                Explore selected landmarks in Ankara.
+                Zoom in to level 12 or higher to display markers.
+                Click a marker to learn more.
+                Locations are approximate.
+            </p>
+
+            <p id="leaflet-status" aria-live="polite"></p>
+            <div id="leaflet-map" class="map-container"
+                 aria-label="Interactive map of Ankara"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 Egemen Erken | GMT458 Web GIS</p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        // Create the map and set its initial centre and zoom.
+        const leafletMap = L.map("leaflet-map", {
+            minZoom: 2,
+            maxZoom: 19,
+            maxBounds: [[-85, -180], [85, 180]],
+            maxBoundsViscosity: 1.0
+        }).setView([39.92, 32.85], 11);
+
+        // noWrap prevents repeated world tiles.
+        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            maxZoom: 19,
+            noWrap: true,
+            attribution:
+                '&copy; <a href="https://www.openstreetmap.org/copyright">' +
+                'OpenStreetMap</a> contributors'
+        }).addTo(leafletMap);
+
+        const locations = [
+            {
+                name: "Hacettepe University — Beytepe Campus",
+                coordinates: [39.867, 32.735],
+                description: "The campus where I study Geomatics Engineering."
+            },
+            {
+                name: "Anıtkabir",
+                coordinates: [39.925, 32.837],
+                description: "The mausoleum of Mustafa Kemal Atatürk."
+            },
+            {
+                name: "Kızılay",
+                coordinates: [39.920, 32.854],
+                description: "A central area and transport hub in Ankara."
+            }
+        ];
+
+        // Store markers together so we can show or hide all of them.
+        const markerGroup = L.layerGroup();
+
+        locations.forEach(function (location) {
+            L.marker(location.coordinates)
+                .bindPopup(
+                    "<strong>" + location.name + "</strong><br>" +
+                    location.description
+                )
+                .addTo(markerGroup);
+        });
+
+        function updateMarkers() {
+            const zoom = leafletMap.getZoom();
+            const visible = zoom >= 12;
+
+            if (visible && !leafletMap.hasLayer(markerGroup)) {
+                markerGroup.addTo(leafletMap);
+            } else if (!visible && leafletMap.hasLayer(markerGroup)) {
+                leafletMap.removeLayer(markerGroup);
+            }
+
+            document.getElementById("leaflet-status").textContent =
+                "Zoom level: " + zoom + " — " +
+                (visible ? "Markers visible." : "Zoom in to see markers.");
+        }
+
+        leafletMap.on("zoomend", updateMarkers);
+        updateMarkers();
+    </script>
+</body>
+</html>
