@@ -10,6 +10,11 @@
         href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     >
     <link rel="stylesheet" href="style.css">
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/ol@10.6.1/ol.css"
+>
+<script src="https://cdn.jsdelivr.net/npm/ol@10.6.1/dist/ol.js"></script>
 </head>
 <body>
     <header>
@@ -37,6 +42,23 @@
             <div id="leaflet-map" class="map-container"
                  aria-label="Interactive map of Ankara"></div>
         </section>
+        <section>
+    <h2>OpenLayers Map — Ankara</h2>
+    <p>
+        Explore the same locations using OpenLayers.
+        Markers appear at zoom level 12 or higher.
+        Click a marker to display its information below the map.
+    </p>
+
+    <p id="ol-status" aria-live="polite"></p>
+
+    <div id="ol-map" class="map-container"
+         aria-label="OpenLayers map of Ankara"></div>
+
+    <p id="ol-info" aria-live="polite">
+        Select a marker to learn more.
+    </p>
+</section>
     </main>
 
     <footer>
@@ -111,5 +133,103 @@
         leafletMap.on("zoomend", updateMarkers);
         updateMarkers();
     </script>
+<script>
+    // Reuse the locations defined in the Leaflet script.
+    const olFeatures = locations.map(function (location) {
+        return new ol.Feature({
+            geometry: new ol.geom.Point(
+                ol.proj.fromLonLat([
+                    location.coordinates[1],
+                    location.coordinates[0]
+                ])
+            ),
+            name: location.name,
+            description: location.description
+        });
+    });
+
+    const olMarkerLayer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            features: olFeatures,
+            wrapX: false
+        }),
+        style: new ol.style.Style({
+            image: new ol.style.Circle({
+                radius: 8,
+                fill: new ol.style.Fill({
+                    color: "#0e7490"
+                }),
+                stroke: new ol.style.Stroke({
+                    color: "#ffffff",
+                    width: 2
+                })
+            })
+        }),
+        visible: false
+    });
+
+    const olView = new ol.View({
+        center: ol.proj.fromLonLat([32.85, 39.92]),
+        zoom: 11,
+        minZoom: 2,
+        maxZoom: 19,
+        multiWorld: false,
+        constrainResolution: true,
+        extent: ol.proj.get("EPSG:3857").getExtent()
+    });
+
+    const olMap = new ol.Map({
+        target: "ol-map",
+        layers: [
+            new ol.layer.Tile({
+                source: new ol.source.OSM({
+                    wrapX: false
+                })
+            }),
+            olMarkerLayer
+        ],
+        view: olView
+    });
+
+    function updateOlMarkers() {
+        const zoom = olView.getZoom();
+        const visible = zoom >= 12;
+
+        olMarkerLayer.setVisible(visible);
+
+        document.getElementById("ol-status").textContent =
+            "Zoom level: " + zoom.toFixed(1) + " — " +
+            (visible ? "Markers visible." : "Zoom in to see markers.");
+
+        if (!visible) {
+            document.getElementById("ol-info").textContent =
+                "Zoom in to level 12 or higher to select a marker.";
+        }
+    }
+
+    olView.on("change:resolution", updateOlMarkers);
+    updateOlMarkers();
+
+    olMap.on("singleclick", function (event) {
+        const feature = olMap.forEachFeatureAtPixel(
+            event.pixel,
+            function (feature) {
+                return feature;
+            },
+            {
+                hitTolerance: 5,
+                layerFilter: function (layer) {
+                    return layer === olMarkerLayer;
+                }
+            }
+        );
+
+        if (feature) {
+            document.getElementById("ol-info").textContent =
+                feature.get("name") + " — " +
+                feature.get("description");
+        }
+    });
+</script>        
 </body>
 </html>

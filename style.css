@@ -199,3 +199,14 @@ table:has(.project-image) td:first-child {
     color: #155e75;
     font-weight: bold;
 }
+#ol-status {
+    color: #155e75;
+    font-weight: bold;
+}
+
+#ol-info {
+    margin-bottom: 0;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #f1f5f9;
+}
